@@ -1,6 +1,6 @@
-import { Performance, Plays } from "./type";
+import { Invoice, Performance, Plays } from "./type";
 
-function statement(invoice: any, plays: Plays) {
+function statement(invoice: Invoice, plays: Plays) {
   function playFor(aPerformance: Performance) {
     return plays[aPerformance.playID];
   }
@@ -49,16 +49,19 @@ function statement(invoice: any, plays: Plays) {
   }
 
   let totalAmount = 0;
-  let volumeCredits = 0;
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
   for (let perf of invoice.performances) {
-    volumeCredits += volumeCreditsFor(perf);
-
     // 청구 내역을 출력한다.
     result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
     totalAmount += amountFor(perf);
   }
+
+  let volumeCredits = 0;
+  for (let perf of invoice.performances) {
+    volumeCredits += volumeCreditsFor(perf);
+  }
+
   result += `총액: ${usd(totalAmount)}\n`;
   result += `적립 포인트: ${volumeCredits}점\n`;
   return result;
