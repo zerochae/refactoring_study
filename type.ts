@@ -23,6 +23,8 @@ export interface Plays {
 export interface Statement {
   customer: string;
   performances: Performance[];
+  totalAmount: number;
+  totalVolumeCredits: number;
 }
 
 export type Invoices = Invoice[];
