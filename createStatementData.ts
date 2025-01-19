@@ -52,7 +52,14 @@ export default function createStatementData(invoice: Invoice, plays: Plays) {
   return statementData;
 
   function createPerformanceCalculator(aPerformance: Performance, aPlay: Play) {
-    return new PerformanceCalculator(aPerformance, aPlay);
+    switch (aPlay.type) {
+      case "tragedy":
+        return new TragedyCalculator(aPerformance, aPlay);
+      case "comedy":
+        return new ComedyCalculator(aPerformance, aPlay);
+      default:
+        throw new Error("알수 없는 장르" );
+    }
   }
 
   function enrichPerformance(aPerformance: Performance) {
