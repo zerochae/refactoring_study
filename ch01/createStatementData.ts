@@ -43,7 +43,7 @@ class ComedyCalculator extends PerformanceCalculator {
   }
 }
 
-export default function createStatementData(invoice: Invoice, plays: Plays) {
+export function createStatementData(invoice: Invoice, plays: Plays) {
   const statementData = {} as Statement;
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformance);
