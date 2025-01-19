@@ -5,9 +5,9 @@ function statement(invoice: Invoice, plays: Plays) {
   return renderHTML(createStatementData(invoice, plays));
 }
 
-function htmlStatemnet(invoice: Invoice, plays: Plays) {
-  return renderHTML(createStatementData(invoice, plays));
-}
+//function htmlStatemnet(invoice: Invoice, plays: Plays) {
+//  return renderHTML(createStatementData(invoice, plays));
+//}
 
 function usd(aNumber: number) {
   return new Intl.NumberFormat("en-US", {
