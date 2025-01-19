@@ -1,0 +1,19 @@
+export interface Performance {
+  playID: string;
+  audience: number;
+}
+
+interface Invoice {
+  customer: string;
+  performances: Performance[];
+}
+
+export interface Play {
+  name: string;
+  type: "tragedy" | "comedy";
+}
+export interface Plays {
+  [key: string]: Play;
+}
+
+export type Invoices = Invoice[];
