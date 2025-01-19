@@ -1,6 +1,14 @@
 import { Invoice, Performance, Plays } from "./type";
 
-function statement(invoice: Invoice, plays: Plays) {
+function renderPlainText(invoice: Invoice, plays: Plays) {
+  let result = `청구 내역 (고객명: ${invoice.customer})\n`;
+  for (let perf of invoice.performances) {
+    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
+  }
+  result += `총액: ${usd(totalAmount())}\n`;
+  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
+  return result;
+
   function playFor(aPerformance: Performance) {
     return plays[aPerformance.playID];
   }
@@ -65,17 +73,10 @@ function statement(invoice: Invoice, plays: Plays) {
 
     return result;
   }
+}
 
-  let result = `청구 내역 (고객명: ${invoice.customer})\n`;
-
-  for (let perf of invoice.performances) {
-    // 청구 내역을 출력한다.
-    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
-  }
-
-  result += `총액: ${usd(totalAmount())}\n`;
-  result += `적립 포인트: ${totalVolumeCredits()}점\n`;
-  return result;
+function statement(invoice: Invoice, plays: Plays) {
+  return renderPlainText(invoice, plays);
 }
 
 export { statement };
