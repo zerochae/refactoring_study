@@ -40,12 +40,12 @@ function statement(invoice: any, plays: Plays) {
     return result;
   }
 
-  function format(aNumber: number) {
+  function usd(aNumber: number) {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 2,
-    }).format(aNumber);
+    }).format(aNumber / 100);
   }
 
   let totalAmount = 0;
@@ -56,10 +56,10 @@ function statement(invoice: any, plays: Plays) {
     volumeCredits += volumeCreditsFor(perf);
 
     // 청구 내역을 출력한다.
-    result += ` ${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${perf.audience}석)\n`;
+    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
     totalAmount += amountFor(perf);
   }
-  result += `총액: ${format(totalAmount / 100)}\n`;
+  result += `총액: ${usd(totalAmount)}\n`;
   result += `적립 포인트: ${volumeCredits}점\n`;
   return result;
 }
