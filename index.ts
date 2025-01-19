@@ -1,6 +1,6 @@
 import { Invoice, Performance, Plays, Statement } from "./type";
 
-function renderPlainText(data: Statement, plays: Plays) {
+function renderPlainText(data: Statement) {
   let result = `청구 내역 (고객명: ${data.customer})\n`;
   for (let perf of data.performances) {
     result += ` ${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
@@ -19,12 +19,17 @@ function renderPlainText(data: Statement, plays: Plays) {
 }
 
 function statement(invoice: Invoice, plays: Plays) {
-  const statementData = {} as Statement;
-  statementData.customer = invoice.customer;
-  statementData.performances = invoice.performances.map(enrichPerformance);
-  statementData.totalAmount = totalAmount(statementData);
-  statementData.totalVolumeCredits = totalVolumeCredits(statementData);
-  return renderPlainText(statementData, plays);
+  return renderPlainText(createStatementData(invoice));
+
+  function createStatementData(invoice: Invoice) {
+    const statementData = {} as Statement;
+    statementData.customer = invoice.customer;
+    statementData.performances = invoice.performances.map(enrichPerformance);
+    statementData.totalAmount = totalAmount(statementData);
+    statementData.totalVolumeCredits = totalVolumeCredits(statementData);
+
+    return statementData;
+  }
 
   function enrichPerformance(aPerformance: Performance) {
     const result = Object.assign({}, aPerformance) as any;
