@@ -9,39 +9,36 @@ class PerformanceCalculator {
     this.play = aPlay;
   }
 
+  get amount(): number {
+    throw new Error("서브클래스에서 처리");
+  }
+
+  get volumeCredits() {
+    return Math.max(this.performance.audience - 30, 0);
+  }
+}
+
+class TragedyCalculator extends PerformanceCalculator {
   get amount() {
-    let result = 0;
-    switch (this.play.type) {
-      case "tragedy": // 비극
-        result = 40000;
-        if (this.performance.audience > 30) {
-          result += 1000 * (this.performance.audience - 30);
-        }
-        break;
-
-      case "comedy": // 희극
-        result = 30000;
-        if (this.performance.audience > 30) {
-          result += 10000 + 500 * (this.performance.audience - 20);
-        }
-        result += 300 * this.performance.audience;
-        break;
-
-      default:
-        throw new Error(`알 수 없는 장르 ${this.performance.play.type}`);
+    let result = 40000;
+    if (this.performance.audience > 30) {
+      result += 1000 * (this.performance.audience - 30);
     }
-
+    return result;
+  }
+}
+class ComedyCalculator extends PerformanceCalculator {
+  get amount() {
+    let result = 30000;
+    if (this.performance.audience > 20) {
+      result += 1000 + 500 * (this.performance.audience - 20);
+    }
+    result += 300 * this.performance.audience;
     return result;
   }
 
   get volumeCredits() {
-    let result = 0;
-    result += Math.max(this.performance.audience - 30, 0);
-    if ("comedy" === this.performance.play.type) {
-      result += Math.floor(this.performance.audience / 5);
-    }
-
-    return result;
+    return super.volumeCredits + Math.floor(this.performance.audience / 5);
   }
 }
 
