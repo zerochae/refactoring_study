@@ -78,8 +78,13 @@ function renderPlainText(data: Statement, plays: Plays) {
 function statement(invoice: Invoice, plays: Plays) {
   const statementData = {} as Statement;
   statementData.customer = invoice.customer;
-  statementData.performances = invoice.performances;
+  statementData.performances = invoice.performances.map(enrichPerformance);
   return renderPlainText(statementData, plays);
+
+  function enrichPerformance(aPerformance: Performance) {
+    const result = Object.assign({}, aPerformance);
+    return result;
+  }
 }
 
 export { statement };
