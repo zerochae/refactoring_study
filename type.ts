@@ -3,6 +3,7 @@ export interface Performance {
   audience: number;
   play: Play;
   amount: number;
+  volumeCredits: number;
 }
 
 export interface Invoice {
