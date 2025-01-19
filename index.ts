@@ -1,11 +1,11 @@
-import { Performance, Play, Plays } from "./type";
+import { Performance, Plays } from "./type";
 
 function statement(invoice: any, plays: Plays) {
   function playFor(aPerformance: Performance) {
     return plays[aPerformance.playID];
   }
 
-  function amountFor(aPerformance: Performance, play: Play) {
+  function amountFor(aPerformance: Performance) {
     let result = 0;
     switch (playFor(aPerformance).type) {
       case "tragedy": // 비극
@@ -40,7 +40,7 @@ function statement(invoice: any, plays: Plays) {
   }).format;
 
   for (let perf of invoice.performances) {
-    let thisAmount = amountFor(perf, playFor(perf));
+    let thisAmount = amountFor(perf);
 
     // 포인트를 적립한다.
     volumeCredits += Math.max(perf.audience - 30, 0);
