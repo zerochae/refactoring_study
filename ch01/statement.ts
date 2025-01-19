@@ -1,4 +1,4 @@
-import createStatementData from "./createStatementData";
+import { createStatementData } from "./createStatementData";
 import { Invoice, Plays, Statement } from "./type";
 
 function statement(invoice: Invoice, plays: Plays) {
