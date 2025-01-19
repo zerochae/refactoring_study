@@ -1,6 +1,7 @@
 export interface Performance {
   playID: string;
   audience: number;
+  play: Play;
 }
 
 export interface Invoice {
